@@ -339,7 +339,10 @@ namespace WindowsFormsApplication2
             Pen p = new Pen(Color.Black);
 
             for (int i = 0; i < (_FFTData.Count - 1) / 2; i++)
-                g.DrawLine(p, (float)i, -(float)Math.Sqrt(Math.Abs(_FFTData[i])) * 250 + 125, (float)(i + 1),
+                g.DrawLine(p,
+                    ((float)i) / (_FFTData.Count - 1) * 2 * FFTBox.Width,
+                    -(float)Math.Sqrt(Math.Abs(_FFTData[i])) * 250 + 125,
+                    ((float)i + 1) / (_FFTData.Count - 1) * 2 * FFTBox.Width,
                     -(float)Math.Sqrt(Math.Abs(_FFTData[i + 1])) * 250 + 125);
 
             p.Color = Color.Red;
@@ -457,7 +460,7 @@ namespace WindowsFormsApplication2
                 LoadTexture(bmpTex[color]);
                 for (int j = 0; j < 50; j++)
                 {
-                    if (_FFTnum[j] - 1!=color)
+                    if (_FFTnum[j] - 1 != color)
                         continue;
                     GL.Enable(EnableCap.Texture2D);
 
@@ -493,7 +496,7 @@ namespace WindowsFormsApplication2
 
             GL.Disable(EnableCap.Lighting);
             GL.Disable(EnableCap.Texture2D);
-            
+
             //myThread t1 = new myThread("Thread 1", glControl1.Width, glControl1.Height, firstColorSpectr, spectrRadius,
             //    _FFTSpectr, glControl1);
             //myThread t2 = new myThread("Thread 1", -glControl1.Width, glControl1.Height, firstColorSpectr, spectrRadius,
@@ -620,7 +623,7 @@ namespace WindowsFormsApplication2
             {
                 GL.Begin(PrimitiveType.TriangleFan);
                 GL.Color4(firstColorSpectr.R, firstColorSpectr.G, firstColorSpectr.B, 0.8);
-                
+
                 if (j == 0)
                     spectrRadius[j] += _FFTSpectr[j] * glControl1.Width / 3;
                 else
