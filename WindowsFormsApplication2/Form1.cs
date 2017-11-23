@@ -493,12 +493,7 @@ namespace WindowsFormsApplication2
 
             GL.Disable(EnableCap.Lighting);
             GL.Disable(EnableCap.Texture2D);
-
-            //GL.Enable(EnableCap.Blend);
-            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            //GL.Enable(EnableCap.Lighting);
-
-
+            
             //myThread t1 = new myThread("Thread 1", glControl1.Width, glControl1.Height, firstColorSpectr, spectrRadius,
             //    _FFTSpectr, glControl1);
             //myThread t2 = new myThread("Thread 1", -glControl1.Width, glControl1.Height, firstColorSpectr, spectrRadius,
