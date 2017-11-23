@@ -21,7 +21,7 @@ namespace WindowsFormsApplication2
 {
     public partial class Form1 : Form
     {
-        const double TR = 0.8; //прозрачность
+        double TR = 0.3; //прозрачность
         //Переменные для работы с буфером
         private static int _fftLength = 1024; // NAudio fft wants powers of two!
         private IWaveIn _waveIn;
@@ -753,5 +753,14 @@ namespace WindowsFormsApplication2
             bmp.UnlockBits(data);
         }
 
+        private void transparencyChange(object sender, EventArgs e)
+        {
+            TR = (double)(numericUpDown2.Value) / 100;
+        }
+
+        private void TransparencyChange(object sender, EventArgs e)
+        {
+
+        }
     }
 }

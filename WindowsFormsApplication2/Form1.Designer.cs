@@ -40,6 +40,11 @@
             this.FFTBox = new System.Windows.Forms.PictureBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.currentWaveFormBox = new System.Windows.Forms.PictureBox();
@@ -48,6 +53,7 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FFTBox)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentWaveFormBox)).BeginInit();
             this.SuspendLayout();
@@ -169,6 +175,11 @@
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox2.Controls.Add(this.numericUpDown2);
+            this.groupBox2.Controls.Add(this.textBox6);
+            this.groupBox2.Controls.Add(this.textBox5);
+            this.groupBox2.Controls.Add(this.textBox4);
+            this.groupBox2.Controls.Add(this.textBox3);
             this.groupBox2.Controls.Add(this.textBox2);
             this.groupBox2.Controls.Add(this.numericUpDown1);
             this.groupBox2.Controls.Add(this.richTextBox1);
@@ -178,11 +189,65 @@
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Location = new System.Drawing.Point(224, 36);
+            this.numericUpDown2.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(61, 20);
+            this.numericUpDown2.TabIndex = 18;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            this.numericUpDown2.ValueChanged += new System.EventHandler(this.TransparencyChange);
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(131, 114);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(87, 20);
+            this.textBox6.TabIndex = 17;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(131, 88);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(87, 20);
+            this.textBox5.TabIndex = 16;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(131, 62);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(87, 20);
+            this.textBox4.TabIndex = 15;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(131, 36);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(87, 20);
+            this.textBox3.TabIndex = 14;
+            this.textBox3.Text = "Transperancy";
+            // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(131, 10);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(62, 20);
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(87, 20);
             this.textBox2.TabIndex = 13;
             this.textBox2.Text = "Intensity";
             // 
@@ -193,14 +258,14 @@
             0,
             0,
             0});
-            this.numericUpDown1.Location = new System.Drawing.Point(199, 10);
+            this.numericUpDown1.Location = new System.Drawing.Point(224, 10);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(86, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(61, 20);
             this.numericUpDown1.TabIndex = 12;
             this.numericUpDown1.Value = new decimal(new int[] {
             500,
@@ -243,6 +308,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.FFTBox)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.currentWaveFormBox)).EndInit();
             this.ResumeLayout(false);
@@ -266,6 +332,11 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.PictureBox currentWaveFormBox;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
     }
 }
 
