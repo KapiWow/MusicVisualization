@@ -21,7 +21,7 @@ namespace WindowsFormsApplication2
 {
     public partial class Form1 : Form
     {
-        double TR = 0.3; //прозрачность
+        double TR = 0.8; //прозрачность
         //Переменные для работы с буфером
         private static int _fftLength = 1024; // NAudio fft wants powers of two!
         private IWaveIn _waveIn;
@@ -333,7 +333,49 @@ namespace WindowsFormsApplication2
                 (float)((double)((int)_audioFileReader.CurrentTime.TotalMilliseconds % 10000) / 10000 * currentWaveFormBox.Width), currentWaveFormBox.Height);
         }
 
-        private void FFTBoxPaint(object sender, PaintEventArgs e)
+        class FFTPaint
+        {
+            private Thread thread;
+            class DataFFT
+            {
+                public PaintEventArgs e;
+                public int Width;
+                public List<double> _FFTData;
+            }
+            public FFTPaint(PaintEventArgs e, int Width, List<double> _FFTData)
+            {
+                thread = new Thread(this.paint);
+                thread.Name = "paint";
+                DataFFT data = new DataFFT();
+                data.e = e;
+                data.Width = Width;
+                data._FFTData = _FFTData;
+                //thread.Start(num);//передача параметра в поток
+                thread.Start(data);//передача параметра в поток
+            }
+
+            void paint(object data)
+            {
+
+                Graphics g = ((DataFFT)data).e.Graphics;
+                Pen p = new Pen(Color.Black);
+
+                for (int i = 0; i < (((DataFFT)data)._FFTData.Count - 1) / 2; i++)
+                    g.DrawLine(p,
+                        ((float)i) / (((DataFFT)data)._FFTData.Count - 1) * 2 * ((DataFFT)data).Width,
+                        -(float)Math.Sqrt(Math.Abs(((DataFFT)data)._FFTData[i])) * 250 + 125,
+                        ((float)i + 1) / (((DataFFT)data)._FFTData.Count - 1) * 2 * ((DataFFT)data).Width,
+                        -(float)Math.Sqrt(Math.Abs(((DataFFT)data)._FFTData[i + 1])) * 250 + 125);
+
+                p.Color = Color.Red;
+                g.DrawLine(p, 0, 325, ((DataFFT)data).Width, 325);
+            }
+
+        }
+
+        public delegate void MyDelegate(PaintEventArgs e);
+
+        public void FFTBoxPaint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             Pen p = new Pen(Color.Black);
@@ -348,6 +390,7 @@ namespace WindowsFormsApplication2
             p.Color = Color.Red;
             g.DrawLine(p, 0, 325, FFTBox.Width, 325);
         }
+
 
 
         private void GLLoad(object sender, EventArgs e)
@@ -508,10 +551,10 @@ namespace WindowsFormsApplication2
 
 
 
-            MusicCirsle(glControl1.Width, glControl1.Height);
-            MusicCirsle(-glControl1.Width, glControl1.Height);
-            MusicCirsle(glControl1.Width, -glControl1.Height);
-            MusicCirsle(-glControl1.Width, -glControl1.Height);
+            MusicCirsle(glControl1.Width, glControl1.Height, Math.PI, 3 * Math.PI / 2);
+            MusicCirsle(-glControl1.Width, glControl1.Height, 3 * Math.PI / 2, 2 * Math.PI);
+            MusicCirsle(glControl1.Width, -glControl1.Height, Math.PI / 2, 2 * Math.PI);
+            MusicCirsle(-glControl1.Width, -glControl1.Height, 0, Math.PI / 2);
 
             //GL.Disable(EnableCap.Lighting);
 
@@ -520,7 +563,7 @@ namespace WindowsFormsApplication2
             GL.Disable(EnableCap.Blend);
 
             GL.Flush();
-            GL.Finish();
+            //GL.Finish();
 
             glControl1.SwapBuffers();
         }
@@ -617,7 +660,7 @@ namespace WindowsFormsApplication2
 
         }
 
-        private void MusicCirsle(double x, double y)
+        private void MusicCirsle(double x, double y, double begin, double end)
         {
             for (int j = 0; j < 5; j++)
             {
@@ -630,14 +673,14 @@ namespace WindowsFormsApplication2
                     spectrRadius[j] += _FFTSpectr[j] * glControl1.Width / Math.Sqrt(j + 10) + spectrRadius[j - 1];
                 spectrRadius[j] /= 2;
 
-                GL.Vertex3(x, y, (double)(1 - 0.1 + j / 100));
-                for (double i = 0; i < 2 * Math.PI; i += 0.05)
+                GL.Vertex3(x, y, (double)(1 - 0.1));
+                for (double i = begin; i < end; i += 0.05)
                 {
                     GL.Color4(secondColorSpectr[j].R, secondColorSpectr[j].G, secondColorSpectr[j].B, 0.8);
                     GL.Vertex3(spectrRadius[j] * Math.Cos(i) + x,
-                        spectrRadius[j] * Math.Sin(i) + y, (double)(1 - 0.1 - j / 100));
+                        spectrRadius[j] * Math.Sin(i) + y, (double)(1 - 0.1));
                     GL.Vertex3(spectrRadius[j] * Math.Cos(i + 0.01) + x,
-                        spectrRadius[j] * Math.Sin(i + 0.01) + y, (double)(1 - 0.1 - j / 100));
+                        spectrRadius[j] * Math.Sin(i + 0.01) + y, (double)(1 - 0.1));
                 }
                 GL.End();
             }
@@ -753,14 +796,9 @@ namespace WindowsFormsApplication2
             bmp.UnlockBits(data);
         }
 
-        private void transparencyChange(object sender, EventArgs e)
-        {
-            TR = (double)(numericUpDown2.Value) / 100;
-        }
-
         private void TransparencyChange(object sender, EventArgs e)
         {
-
+            TR = (double)(numericUpDown2.Value) / 100;
         }
     }
 }

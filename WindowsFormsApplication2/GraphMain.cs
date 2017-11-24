@@ -10,7 +10,7 @@ namespace WindowsFormsApplication2
     class GraphMain
     {
 
-        const int maxPoints = 2000;
+        const int maxPoints = 500;
         private double _r;
         private double _Pi;
         private double _maxR;
