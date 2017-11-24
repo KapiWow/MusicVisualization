@@ -10,10 +10,11 @@ namespace WindowsFormsApplication2
     class GraphMain
     {
 
-        const int maxPoints = 500;
+        int _maxPoints = 2000;
         private double _r;
         private double _Pi;
         private double _maxR;
+        private double _minR;
         private List<PointF> _coordinates;
         private Color _color;
         private List<Color> _colors;
@@ -38,11 +39,17 @@ namespace WindowsFormsApplication2
         {
             _coordinates = new List<PointF>();
             _colors = new List<Color>();
-            _maxR = (maxX + maxY);
+            _maxR = (maxX + maxY)/Math.Sqrt(2);
+            _minR = _maxR / 3;
             _color = Color.Black;
         }
 
-        public void AddPoint(double total, Color currentColor, double different)
+        public void Change(int maxPoints)
+        {
+            _maxPoints = maxPoints;
+        }
+
+        public void AddPoint(double total, Color currentColor, double different, double speed)
         {
             Random randomNumber = new Random();
 
@@ -52,8 +59,9 @@ namespace WindowsFormsApplication2
                 total = 1;
 
             different += 0.1;
+            different *= speed;
 
-            double newR = (_maxR * total + 14 * _r) / 15;
+            double newR = ((_maxR - _minR) * total + 14 * _r + _minR) / 15;
             //double newPi = _Pi + total * total;
             double newPi = _Pi + different * different * 2 * total / 3;
 
@@ -71,7 +79,7 @@ namespace WindowsFormsApplication2
 
             _color = currentColor;
 
-            if (_coordinates.Count > maxPoints)
+            while (_coordinates.Count > _maxPoints)
             {
                 for (int i = 0; i < 10; i++)
                 {

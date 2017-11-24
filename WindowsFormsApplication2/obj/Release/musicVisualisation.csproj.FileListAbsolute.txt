@@ -20,9 +20,6 @@ C:\Users\Kapi\Dropbox\VisualStudio_Projects\MusicVisualisation\WindowsFormsAppli
 C:\Users\Kapi\Dropbox\VisualStudio_Projects\MusicVisualisation\WindowsFormsApplication2\bin\Release\NAudio.dll
 C:\Users\Kapi\Dropbox\VisualStudio_Projects\MusicVisualisation\WindowsFormsApplication2\bin\Release\NAudio.WindowsMediaFormat.dll
 C:\Users\Kapi\Dropbox\VisualStudio_Projects\MusicVisualisation\WindowsFormsApplication2\bin\Release\NAudio.xml
-C:\Users\Kapi\Dropbox\VisualStudio_Projects\MusicVisualisation\WindowsFormsApplication2\bin\Release\OpenTK.pdb
-C:\Users\Kapi\Dropbox\VisualStudio_Projects\MusicVisualisation\WindowsFormsApplication2\bin\Release\OpenTK.xml
-C:\Users\Kapi\Dropbox\VisualStudio_Projects\MusicVisualisation\WindowsFormsApplication2\bin\Release\OpenTK.GLControl.xml
 C:\Users\Kapi\Dropbox\VisualStudio_Projects\MusicVisualisation\WindowsFormsApplication2\obj\Release\musicVisualisation.csprojResolveAssemblyReference.cache
 C:\Users\Kapi\Dropbox\VisualStudio_Projects\MusicVisualisation\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.Form1.resources
 C:\Users\Kapi\Dropbox\VisualStudio_Projects\MusicVisualisation\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.Properties.Resources.resources

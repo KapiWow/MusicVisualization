@@ -53,13 +53,13 @@ namespace WindowsFormsApplication2
         private double _green = 128;
         private double _total = 0;
         private double _fonStrong = 0;
-        private double hue = 0;
+        private double _hue = 0;
         private double _different = 0;
         //Тип заполенения
         PolygonMode mode = PolygonMode.Fill;
         //Круговой график
         private GraphMain Visual1;
-        private GraphMain Visual2;
+        //private GraphMain Visual2;
         //Текстуры для графиков
         Bitmap[] bmpTex = new Bitmap[5];
         //Фоновый цвет музыки
@@ -70,12 +70,13 @@ namespace WindowsFormsApplication2
         private double[] _FFTSpectr = new double[5];
         // Набор цветов для музыкальных кругов
         Color firstColorSpectr = Color.Black; //внутренний цвет
+        private double _speed = 1.0;
         private static Color[] secondColorSpectr =
             {Color.Red, Color.Purple, Color.Yellow, Color.Lime, Color.DarkBlue };
         //радиус определенного спектра на музыкальном круге
         double[] spectrRadius = new double[5];
         //Делитель силы спектра
-        private static int _fftPart = 3;
+        private double _fftPart = 3;
         //конструктор формы
         public Form1()
         {
@@ -147,7 +148,7 @@ namespace WindowsFormsApplication2
 
                 if (_FFTDataAvailable)
                 {
-                    // double hue = 0.2
+                    // double _hue = 0.2
                     double saturation = 0, value = 0;
                     //Просчет спектров для графика
                     if (_FFTDataOld.Capacity > 1020)
@@ -172,17 +173,26 @@ namespace WindowsFormsApplication2
                     for (int i = 0; i < 5; i++)
                         _FFTSpectr[i] = 0;
 
-                    for (int i = 0; i < 40; i++)
+                    //for (int i = 0; i < 40; i++)
+                    //    _FFTSpectr[0] += _FFTData[i];
+                    //for (int i = 40; i < 100; i++)
+                    //    _FFTSpectr[1] += _FFTData[i];
+                    //for (int i = 100; i < 175; i++)
+                    //    _FFTSpectr[2] += _FFTData[i];
+                    //for (int i = 175; i < 300; i++)
+                    //    _FFTSpectr[3] += _FFTData[i];
+                    //for (int i = 300; i < 1024; i++)
+                    //    _FFTSpectr[4] += _FFTData[i];
+                    for (int i = 0; i < 30; i++)
                         _FFTSpectr[0] += _FFTData[i];
-                    for (int i = 40; i < 100; i++)
+                    for (int i = 30; i < 100; i++)
                         _FFTSpectr[1] += _FFTData[i];
-                    for (int i = 100; i < 175; i++)
+                    for (int i = 100; i < 400; i++)
                         _FFTSpectr[2] += _FFTData[i];
-                    for (int i = 175; i < 300; i++)
+                    for (int i = 400; i < 900; i++)
                         _FFTSpectr[3] += _FFTData[i];
-                    for (int i = 300; i < 1024; i++)
+                    for (int i = 850; i < 960; i++)
                         _FFTSpectr[4] += _FFTData[i];
-
 
 
                     double total2 = 0;
@@ -192,13 +202,13 @@ namespace WindowsFormsApplication2
                     for (int i = 0; i < 5; i++)
                         _FFTSpectr[i] = _FFTSpectr[i] / _fftPart;
 
-                    //hue -= _FFTSpectr[0] + _FFTSpectr[1];
-                    //hue += _FFTSpectr[2] + _FFTSpectr[3];
+                    //_hue -= _FFTSpectr[0] + _FFTSpectr[1];
+                    //_hue += _FFTSpectr[2] + _FFTSpectr[3];
 
-                    if (hue > 1)
-                        hue--;
-                    if (hue < 0)
-                        hue++;
+                    if (_hue > 1)
+                        _hue--;
+                    if (_hue < 0)
+                        _hue++;
 
                     //Конец просчета спектров для графика
                     //просчет цвета
@@ -217,24 +227,38 @@ namespace WindowsFormsApplication2
 
                     _total = total * 100 / (double)(numericUpDown1.Value * 2 / 3) * 450 / (double)(numericUpDown1.Value);
 
-                    hue += 0.01 * _total;
+                    _hue += 0.01 * _total;
 
-                    _red = HSVtoRGB(hue, _total, _total * 0.5 + 0.5).R;
-                    _blue = HSVtoRGB(hue, _total, _total * 0.5 + 0.5).B;
-                    _green = HSVtoRGB(hue, _total, _total * 0.5 + 0.5).G;
+                    _red = HSVtoRGB(_hue, _total, _total * 0.5 + 0.5).R;
+                    _blue = HSVtoRGB(_hue, _total, _total * 0.5 + 0.5).B;
+                    _green = HSVtoRGB(_hue, _total, _total * 0.5 + 0.5).G;
 
-                    Visual1.AddPoint(_total, _soundColor, _different);
+                    Visual1.AddPoint(_total, _soundColor, _different, _speed);
                     total = total * 100 / (double)(numericUpDown1.Value);
                     _soundColor = Color.FromArgb((byte)((_red + 3 * _soundColor.R) / 4),
                         (byte)((_green + 3 * _soundColor.G) / 4), (byte)((_blue + 3 * _soundColor.B) / 4));
 
                     //конец просчета цвета
                     //Вывод информации на текстбок
-                    richTextBox1.Text = "Red" + (int)(_red) + "\n\r" +
-                    "Green" + (int)(_green) + "\n\r" +
-                    "Blue" + (int)(_blue) + "\n\r" +
-                    "Total" + (int)(_total * 100) + "\n\r" +
-                    "Defferent" + (int)(_different * 100) + "\n\r";
+                    //richTextBox1.Text = "Red" + (int)(_red) + "\n\r" +
+                    //"Green" + (int)(_green) + "\n\r" +
+                    //"Blue" + (int)(_blue) + "\n\r" +
+                    //"Total" + (int)(_total * 100) + "\n\r" +
+                    //"Defferent" + (int)(_different * 100) + "\n\r";
+
+
+
+                    //richTextBox1.Text = //"Red" + (int) (_red) + "\n\r" +
+                    //                    //"Green" + (int) (_green) + "\n\r" +
+                    //                    //"Blue" + (int) (_blue) + "\n\r" +
+                    //                    // "Total" + (int) (_total * 100) + "\n\r" +
+                    //                    // "Defferent" + (int) (_different * 100) + "\n\r" +
+                    //                    "0   " + (int) (_FFTSpectr[0] * 100) + "\n\r" +
+                    //                    "1   " + (int) (_FFTSpectr[1] * 100) + "\n\r" +
+                    //                    "2   " + (int) (_FFTSpectr[2] * 100) + "\n\r" +
+                    //                    "3   " + (int) (_FFTSpectr[3] * 100) + "\n\r" +
+                    //                    "4   " + (int) (_FFTSpectr[4] * 100) + "\n\r";
+
 
                 }
                 //Просчет новой точке на музыкальном круге
@@ -407,7 +431,7 @@ namespace WindowsFormsApplication2
             int h = glControl1.Height;
 
             Visual1 = new GraphMain(w, h);
-            Visual2 = new GraphMain(w, h);
+            //Visual2 = new GraphMain(w, h);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             GL.Ortho(-w, w, -h, h, -100, 100);
@@ -443,7 +467,7 @@ namespace WindowsFormsApplication2
                 GL.Begin(PrimitiveType.TriangleFan);
                 GL.Color3(Visual1.Colors[0]);
                 GL.Color4(Visual1.Colors[0].R, Visual1.Colors[0].G, Visual1.Colors[0].B, (double)0.5);
-                GL.Color4(Color.FromArgb(Visual1.Colors[0].A, Visual1.Colors[0].R, Visual1.Colors[0].G, Visual1.Colors[0].B));
+                GL.Color4(Color.FromArgb(Visual1.Colors[0].A*0, Visual1.Colors[0].R, Visual1.Colors[0].G, Visual1.Colors[0].B));
                 GL.Vertex3(-0, -0, -1);
                 GL.Vertex3(Visual1.Coordinates[0].X, Visual1.Coordinates[0].Y, -1);
                 for (int i = 0; i < Visual1.Coordinates.Count; i++)
@@ -469,7 +493,7 @@ namespace WindowsFormsApplication2
 
                     GL.Color3(Visual1.Colors[i]);
                     GL.Color4(Visual1.Colors[i].R, Visual1.Colors[i].G, Visual1.Colors[i].B, (double)0.5);
-                    GL.Color4(Color.FromArgb((int)(TR * 255), Visual1.Colors[i].R, Visual1.Colors[i].G, Visual1.Colors[i].B));
+                    GL.Color4(Color.FromArgb((int)((double)i/Visual1.Coordinates.Count*TR * 255), Visual1.Colors[i].R, Visual1.Colors[i].G, Visual1.Colors[i].B));
 
                     GL.Vertex3(Visual1.Coordinates[i].X, Visual1.Coordinates[i].Y,
                         (float)((double)i / Visual1.Coordinates.Count / 2 - 1));
@@ -479,16 +503,16 @@ namespace WindowsFormsApplication2
 
             //////конец прорисовки круга
 
-            float[] diffuse = new float[3] { 1.5f, 1.5f, 1.5f };
+            float[] diffuse = new float[3] { 0.5f, 0.5f, 0.5f };
             GL.Light(LightName.Light0, LightParameter.Diffuse, diffuse);
 
-            float[] ambient = new float[3] { 3, 3, 3 };
+            float[] ambient = new float[3] { 4, 4, 4 };
             GL.Light(LightName.Light0, LightParameter.Ambient, ambient);
 
             float[] lightPos = new float[4] { -glControl1.Width, 0.0f, 10.0f, 1.0f };
             GL.Light(LightName.Light0, LightParameter.Position, lightPos);
 
-            float[] specular = new float[4] { 100, 100, 100, 1 };
+            float[] specular = new float[4] { 10, 10, 10, 1};
             GL.Light(LightName.Light0, LightParameter.Specular, specular);
 
             GL.Enable(EnableCap.Lighting);
@@ -799,6 +823,22 @@ namespace WindowsFormsApplication2
         private void TransparencyChange(object sender, EventArgs e)
         {
             TR = (double)(numericUpDown2.Value) / 100;
+        }
+
+        private void SizeChange(object sender, EventArgs e)
+        {
+            _fftPart = 180.0 / (double)numericUpDown3.Value;
+        }
+
+        private void CountChange(object sender, EventArgs e)
+        {
+            Visual1.Change((int)numericUpDown4.Value);
+        }
+
+        private void SpeedChange(object sender, EventArgs e)
+        {
+            _speed = (double)numericUpDown5.Value/5;
+            Console.WriteLine(_speed);
         }
     }
 }
